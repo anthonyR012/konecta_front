@@ -1,0 +1,29 @@
+.login{
+    max-width: 360px;
+    margin: 8vh auto;
+    display: grid;
+    gap: 12px;
+}
+
+label{
+    display: grid;
+    gap: 6px;
+}
+
+input{
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+button{
+    padding: 10px 14px;
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.err, .error {
+    color: #b00020;
+    font-size: .9rem;
+}
