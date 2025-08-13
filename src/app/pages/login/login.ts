@@ -35,6 +35,7 @@ export class Login {
         this.router.navigateByUrl('/dashboard');
       },
       error: (err) => {
+        console.log(err);
         this.loading = false;
         this.error = err?.error?.message ?? "No se pudo iniciar sesión";
       }

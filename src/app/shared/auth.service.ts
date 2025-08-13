@@ -1,11 +1,12 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable, inject } from "@angular/core";
+import { Injectable, inject, signal } from "@angular/core";
 import { tap } from "rxjs";
 import { environment } from "../../environments/environment";
 
 type LoginBody = { email: string; password: string };
+type User = { id: number, name: string; email: string; role: string }; 
 type LoginResponse = {
-    user: { id: number, name: string; email: string; role: string },
+    user: User,
     token: string
 };
 
@@ -15,10 +16,18 @@ const API = environment.api;
 @Injectable({ providedIn: 'root' })
 export class AuthService {
     private http = inject(HttpClient);
+    user = signal<User | null>(null);
 
     login(body: LoginBody) {
         return this.http.post<LoginResponse>(`${API}/auth/login`, body).pipe(
-            tap(res => localStorage.setItem(TOKEN_KEY, res.token))
+            tap(res => { console.log(res);
+             localStorage.setItem(TOKEN_KEY, res.token);})
+        );
+    }
+    
+    fetchMe(){
+        return this.http.get<User>(`${API}/auth/me`).pipe(
+            tap( u => this.user.set(u))
         );
     }
 
