@@ -2,7 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { AuthService } from '../../shared/auth.service';
 import { Router } from '@angular/router';
 import { Ticket, TicketService } from '../../shared/ticket.service';
-import { Flight, FlightService } from '../../shared/flight.service';
+import { Flight, FlightService, Paginated } from '../../shared/flight.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -23,17 +23,49 @@ export class Dashboard {
   loading = signal(false);
   message = signal<string | null>(null);
 
+  page = signal(1);
+  perPage = signal(10);
+  total = signal(0);
+  lastPage = signal(1);
+  origin = signal<string>('');
+  destination = signal<string>('');
+  date = signal<string>('');
+
   ngOnInit() {
     this.loading.set(true);
-    this.flightsApi.list().subscribe({
-      next: (rows) => this.flights.set(rows),
-      complete: () => this.loading.set(false)
-    }) 
-    
+    this.load();
+    this.ticketsApi.mine().subscribe({ next: (rows) => this.tickets.set(rows)});
     if (!this.auth.user()) {
       this.auth.fetchMe().subscribe({ error: () => this.router.navigateByUrl('/login') });
     }
   }
+
+  load(page = this.page(), per = this.perPage()) {
+    this.loading.set(true);
+    this.flightsApi.list({
+      page,
+      per_page: per,
+      origin: this.origin() || undefined,
+      destination: this.destination() || undefined,
+      date: this.date() || undefined
+    }).subscribe({
+      next: (res: Paginated<Flight>) => {
+        this.flights.set(res.data);
+        this.page.set(res.current_page);
+        this.perPage.set(res.per_page as any);
+        this.total.set(res.total);
+        this.lastPage.set(res.last_page);
+      },
+      error: (e) => this.message.set(e?.error?.message ?? 'Error cargando vuelos'),
+      complete: () => this.loading.set(false)
+    });
+  }
+
+  goPrev() { if (this.page() > 1) this.load(this.page() - 1); }
+  goNext() { if (this.page() < this.lastPage()) this.load(this.page() + 1); }
+  applyFilters() { this.page.set(1); this.load(1); }
+  clearFilters() { this.origin.set(''); this.destination.set(''); this.date.set(''); this.page.set(1); this.load(1); }
+
 
   reserve(flight: Flight){
     this.loading.set(true);
@@ -41,7 +73,7 @@ export class Dashboard {
       next:(ticket) => {
         this.message.set(`Reserva creada. Localizador: ${ticket.locator}`);
         this.ticketsApi.mine().subscribe({ next: (rows) => this.tickets.set(rows)});
-        this.flightsApi.list().subscribe({ next: (rows) => this.flights.set(rows)});
+        this.load();
       },
       error: (e) => this.message.set(e?.error?.message ?? 'No se pudo reservar'),
       complete: () => this.loading.set(false)

@@ -29,6 +29,14 @@
   </table>
 }
 
+@if(!loading() && total() > 0){
+  <div class="pager">
+    <button (click)="goPrev()" [disabled]="page() <= 1">« Anterior</button>
+    <span>Página {{ page() }} de {{ lastPage() }} ({{ total() }} resultados)</span>
+    <button (click)="goNext()" [disabled]="page() >= lastPage()">Siguiente »</button>
+  </div>
+}
+
 <h2>Mis Tickets</h2>
 <ul>
   @for (t of tickets(); track $index) {
@@ -40,3 +48,4 @@
 
 <hr />
 <button (click)="logout()">Cerrar sesión</button>
+

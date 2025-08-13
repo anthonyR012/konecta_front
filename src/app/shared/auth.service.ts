@@ -15,8 +15,16 @@ const API = environment.api;
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+    
     private http = inject(HttpClient);
     user = signal<User | null>(null);
+    isAuthenticated = false;
+
+    loadSession() {
+        const token = localStorage.getItem(TOKEN_KEY);
+        this.isAuthenticated = !!token;
+        return Promise.resolve(true);
+    }
 
     login(body: LoginBody) {
         return this.http.post<LoginResponse>(`${API}/auth/login`, body).pipe(
