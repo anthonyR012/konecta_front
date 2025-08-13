@@ -1,5 +1,42 @@
-<h1>Dashboard</h1>
-@if(userSign()){
-  <p>Hola, {{ userSign()!.name }} ({{ userSign()!.role }})</p>
+<h2>Vuelos disponibles</h2>
+@if(loading()){
+  <p>Cargando...</p>
+}@else if(message()){
+  <p>{{ message() }}</p>
 }
+
+@if(!loading() && flights().length){
+  <table>
+    <thead>
+      <tr>
+        <th>Código</th><th>Origen</th><th>Destino</th><th>Salida</th><th>Disp.</th><th>Precio</th><th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (f of flights(); track $index) {
+        <tr>
+          <td>{{ f.code }}</td>
+          <td>{{ f.origin }}</td>
+          <td>{{ f.destination }}</td>
+          <td>{{ f.departure_at | date:'short' }}</td>
+          <td>{{ f.seats_available }}</td>
+          <td>{{ f.price | currency:'USD':'symbol' }}</td>
+          <td><button (click)="reserve(f)" [disabled]="f.seats_available < 1">Reservar</button></td>
+        </tr>
+      }
+     
+    </tbody>
+  </table>
+}
+
+<h2>Mis Tickets</h2>
+<ul>
+  @for (t of tickets(); track $index) {
+    <li>
+      {{ t.locator }} — {{ t.flight?.origin }} → {{ t.flight?.destination }} — asientos: {{ t.seats }} — estado: {{ t.status }}
+    </li>
+  }
+</ul>
+
+<hr />
 <button (click)="logout()">Cerrar sesión</button>
