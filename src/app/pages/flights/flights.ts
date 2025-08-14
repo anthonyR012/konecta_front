@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { Flight, FlightService, Paginated } from '../../shared/flight.service';
-import { Ticket, TicketService } from '../../shared/ticket.service';
+import { TicketService } from '../../shared/ticket.service';
 import { AuthService } from '../../shared/auth.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -15,12 +15,11 @@ export class Flights {
 
   private auth = inject(AuthService);
   private router = inject(Router);
-  private ticketsApi = inject(TicketService);
   private flightsApi = inject(FlightService);
+  private ticketsApi = inject(TicketService);
 
   userSign = this.auth.user;
   flights = signal<Flight[]>([]);
-  tickets = signal<Ticket[]>([]);
   loading = signal(false);
   message = signal<string | null>(null);
 
@@ -33,10 +32,8 @@ export class Flights {
   date = signal<string>('');
 
   ngOnInit() {
-    console.log("Carga componente");
     this.loading.set(true);
     this.load();
-    this.ticketsApi.mine().subscribe({ next: (rows) => this.tickets.set(rows)});
     if (!this.auth.user()) {
       this.auth.fetchMe().subscribe({ error: () => this.router.navigateByUrl('/login') });
     }
@@ -74,8 +71,7 @@ export class Flights {
     this.ticketsApi.create(flight.id, 1).subscribe({
       next:(ticket) => {
         this.message.set(`Reserva creada. Localizador: ${ticket.locator}`);
-        this.ticketsApi.mine().subscribe({ next: (rows) => this.tickets.set(rows)});
-        this.load();
+         this.load();
       },
       error: (e) => this.message.set(e?.error?.message ?? 'No se pudo reservar'),
       complete: () => this.loading.set(false)

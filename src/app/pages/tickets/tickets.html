@@ -1,0 +1,42 @@
+<main class="main-content">
+    <header class="main-header">
+        <h1>Mis tiquetes</h1>
+    </header>
+    @if(loading()){
+    <p>Cargando...</p>
+    }@else if(message()){
+    <p>{{ message() }}</p>
+    }
+
+
+    <section class="data-table">
+        @if(!loading() && tickets().length){
+        <table>
+            <thead>
+                <tr>
+                    <th>Vuelo</th>
+                    <th>Locador</th>
+                    <th>Sillas</th>
+                    <th>Destino</th>
+                    <th>Estado</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (t of tickets(); track $index) {
+                <tr>
+                    <td>{{ t.flight?.code }}</td>
+                    <td>{{ t.locator }}</td>
+                    <td>{{ t.seats }}</td>
+                    <td>{{ t.flight?.destination }}</td>
+                    <td>{{ t.status }}</td>
+                </tr>
+                }
+
+            </tbody>
+        </table>
+        }
+    </section>
+
+
+</main>
