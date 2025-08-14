@@ -1,29 +1,82 @@
-.login{
-    max-width: 360px;
-    margin: 8vh auto;
-    display: grid;
-    gap: 12px;
-}
 
-label{
+
+label {
     display: grid;
     gap: 6px;
+    padding: 10px;
+    font-size: medium;
+    font-weight: lighter;
+    font-family: 'Times New Roman', Times, serif;
 }
 
-input{
+input {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 8px;
 }
 
-button{
+
+.err,
+.error {
+    color: #b00020;
+    font-size: .9rem;
+}
+
+.background {
+    background-color: #f0f0f0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+.err {
+    color: red;
+    font-size: 0.9rem;
+}
+
+.error {
+    color: red;
+    margin-top: 1rem;
+}
+
+.title{
+    text-align: center; 
+    font-family: 'Times New Roman', Times, serif;  
+}
+
+.button {
+    width: 100%;
+    margin-top: 15px;
     padding: 10px 14px;
     border: 0;
     border-radius: 8px;
     cursor: pointer;
-}
+    background-color: #2667d7; 
+    color: white;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button:disabled {
+    background-color: #b0b0b0; 
+    cursor: not-allowed;
+  }
 
-.err, .error {
-    color: #b00020;
-    font-size: .9rem;
-}
+  .register{
+    text-align: center;
+    width: 100%;
+  }
+
+  .register a {
+    text-decoration: none;
+    color: #2667d7;
+    margin-left: 10px;
+  }

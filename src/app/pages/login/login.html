@@ -1,29 +1,34 @@
+<div class="background">
+    <div class="login">
+        <h1 class="title">Iniciar sesión</h1>
 
-<div class="login">
-    <h1>Iniciar sesión</h1>
-
-    <form [formGroup]="form" (ngSubmit)="submit()">
-        <label>
-            Correo
-            <input type="email" formControlName="email" placeholder="admin@example.com" />
-        </label>
-        @if (form.controls.email.touched && form.controls.email.invalid){
-            <div class="err" >
+        <form [formGroup]="form" (ngSubmit)="submit()">
+            <label>
+                Correo
+                <input type="email" formControlName="email" placeholder="admin@example.com" />
+            </label>
+            @if (form.controls.email.touched && form.controls.email.invalid){
+            <div class="err">
                 Ingresa un correo válido.
-            </div>    
-        }
-        <label>
-            Contraseña 
-            <input type="password" formControlName="password" placeholder="********" />
-        </label>
-        @if(form.controls.password.touched && form.controls.password.invalid){
+            </div>
+            }
+            <label>
+                Contraseña
+                <input type="password" formControlName="password" placeholder="********" />
+            </label>
+            @if(form.controls.password.touched && form.controls.password.invalid){
             <div class="err">
                 La contraseña es requerida.
             </div>
+            }
+            <button type="submit" class="button" [disabled]="loading || form.invalid">Entrar</button>
+
+
+        </form>
+        @if(error){
+        <p class="error"> {{ error }}</p>
         }
-        <button type="submit" [disabled]="loading || form.invalid">Entrar</button>
-    </form>
-    @if(error){
-        <p class="error"> {{ error }}</p> 
-    }
+        <p class="register"> ¿No tienes una cuenta?<a routerLink="/register">Registrate</a></p>
+    </div>
+
 </div>
