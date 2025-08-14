@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { Flight, FlightService, Paginated } from '../../shared/flight.service';
 import { TicketService } from '../../shared/ticket.service';
 import { AuthService } from '../../shared/auth.service';
@@ -31,6 +31,12 @@ export class Flights {
   destination = signal<string>('');
   date = signal<string>('');
 
+  constructor(){
+    effect(() =>{
+      this.load();
+    });
+  }
+
   ngOnInit() {
     this.loading.set(true);
     this.load();
@@ -38,10 +44,11 @@ export class Flights {
       this.auth.fetchMe().subscribe({ error: () => this.router.navigateByUrl('/login') });
     }
   }
+  
 
   load(page = this.page(), per = this.perPage()) {
     this.loading.set(true);
-    this.flightsApi.list({
+     this.flightsApi.list({
       page,
       per_page: per,
       origin: this.origin() || undefined,
@@ -70,7 +77,7 @@ export class Flights {
     this.loading.set(true);
     this.ticketsApi.create(flight.id, 1).subscribe({
       next:(ticket) => {
-        this.message.set(`Reserva creada. Localizador: ${ticket.locator}`);
+         this.message.set(`Reserva creada. Localizador: ${ticket.locator}`);
          this.load();
       },
       error: (e) => this.message.set(e?.error?.message ?? 'No se pudo reservar'),

@@ -8,6 +8,21 @@
     <p>{{ message() }}</p>
     }
 
+    <section class="filters">
+        <label>
+            <p>Origen</p>
+            <input type="text" [value]="origin()" (input)="origin.set($any($event.target).value)">
+        </label>
+        <label>
+            <p>Destino</p>
+            <input type="text" [value]="destination()" (input)="destination.set($any($event.target).value)">
+        </label>
+        <label>
+            <p>Fecha</p>
+            <input type="date" [value]="date()" (input)="date.set($any($event.target).value)">
+        </label>
+    </section>
+
     <section class="data-table">
         @if(!loading() && flights().length){
         <table>
