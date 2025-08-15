@@ -4,6 +4,7 @@ import { tap } from "rxjs";
 import { environment } from "../../environments/environment";
 
 type LoginBody = { email: string; password: string };
+type RegisterBody = { name: string; email: string; password: string };
 type User = { id: number, name: string; email: string; role: string };
 type LoginResponse = {
     user: User,
@@ -28,6 +29,14 @@ export class AuthService {
 
     login(body: LoginBody) {
         return this.http.post<LoginResponse>(`${API}/auth/login`, body).pipe(
+            tap(res => {
+                localStorage.setItem(TOKEN_KEY, res.token);
+            })
+        );
+    }
+
+    register(body: RegisterBody){
+        return this.http.post<LoginResponse>(`${API}/auth/register`, body).pipe(
             tap(res => {
                 localStorage.setItem(TOKEN_KEY, res.token);
             })

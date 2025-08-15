@@ -1,0 +1,34 @@
+<div class="background">
+    <div class="register">
+        <h1 class="title">Registrarme</h1>
+
+        <form [formGroup]="form" (ngSubmit)="submit()">
+            <label>
+                Nombre
+                <input type="text" formControlName="name" placeholder="John Doe" />
+            </label>
+            <label>
+                Correo
+                <input type="email" formControlName="email" placeholder="admin@example.com" />
+            </label>
+            <div class="password-section">
+                <label>
+                    Contraseña
+                    <input type="password" formControlName="password" placeholder="********" />
+                </label>
+                <label>
+                    Confirme contraseña
+                    <input type="password" formControlName="confirmPassword" placeholder="********" />
+                </label>        
+            </div>
+            <button type="submit" class="button" [disabled]="loading || form.invalid">Registrarme</button>
+
+
+        </form>
+        @if(error){
+        <p class="error"> {{ error }}</p>
+        }
+        <p class="login"> ¿Ya estas registrado?<a routerLink="/login">Ingresar</a></p>
+    </div>
+
+</div>

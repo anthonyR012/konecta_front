@@ -1,16 +1,17 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../shared/auth.service';
+import { Router, RouterLink } from '@angular/router';
 
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-register',
   imports: [ReactiveFormsModule, RouterLink],
-  templateUrl: './login.html',
-  styleUrls: ['./login.scss']
+  templateUrl: './register.html',
+  styleUrl: './register.scss'
 })
-export class Login {
+export class Register {
+
   private fb = inject(FormBuilder);
   private auth = inject(AuthService);
   private router = inject(Router);
@@ -20,16 +21,24 @@ export class Login {
   
   form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
+    name: ['', [Validators.required]],
     password: ['', [Validators.required]],
+    confirmPassword: ['', [Validators.required]]
   });
 
-  submit (){
+  submit(){
     if(this.form.invalid || this.loading) return;
     this.loading = true; 
     this.error = null;
+    const { name, email , password, confirmPassword } = this.form.getRawValue();
 
-    const { email , password } = this.form.getRawValue();
-    this.auth.login({ email: email!, password: password! }).subscribe({
+    if(password !== confirmPassword){
+      this.loading = false;
+      this.error = "Las contrasenas no coinciden";
+      return;
+    }
+
+    this.auth.register({ email: email!, password: password!, name: name! }).subscribe({
       next: () => {
         this.loading = false;
         this.router.navigateByUrl('/dashboard');
@@ -40,5 +49,4 @@ export class Login {
       }
     });
   }
-
 }
