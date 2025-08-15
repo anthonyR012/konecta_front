@@ -3,9 +3,9 @@
         <h1>Vuelos</h1>
     </header>
     @if(loading()){
-    <p>Cargando...</p>
-    }@else if(message()){
-    <p>{{ message() }}</p>
+    <div class="overlay">
+        <div class="spinner"></div>
+    </div>
     }
 
     <section class="filters">

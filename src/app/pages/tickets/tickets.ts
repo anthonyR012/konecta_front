@@ -1,9 +1,10 @@
 import { Component, inject, signal } from '@angular/core';
 import { Ticket, TicketService } from '../../shared/ticket.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-tickets',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './tickets.html',
   styleUrl: './tickets.scss'
 })
@@ -15,7 +16,23 @@ export class Tickets {
 
 
   ngOnInit() {
-    this.ticketsApi.mine().subscribe({ next: (rows) => this.tickets.set(rows)});
+    this.loading.set(true);
+    this.ticketsApi.mine().subscribe({ next: (rows) => this.tickets.set(rows), complete: () => this.loading.set(false) });
   }
 
+
+  cancel(ticket: Ticket) {
+    ticket.status = 'canceled';
+    this.loading.set(true);
+    this.ticketsApi.cancel(ticket).subscribe({
+      next: () => {
+        this.message.set('Tiquete cancelado');
+        this.ticketsApi.mine().subscribe({ next: (rows) => this.tickets.set(rows), });
+      },
+      complete: () => this.loading.set(false),
+      error: (e) => this.message.set(e?.error?.message ?? 'No se pudo cancelar el tiquete')
+    });
+    this.loading.set(false);
+
+  }
 }

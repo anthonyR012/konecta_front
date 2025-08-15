@@ -24,4 +24,8 @@ export class TicketService {
   mine() {
     return this.http.get<Ticket[]>(`${API}/tickets/mine`);
   }
+
+  cancel(ticket: Ticket){
+    return this.http.put(`${API}/tickets/${ticket.id}`, ticket);
+  }
 }

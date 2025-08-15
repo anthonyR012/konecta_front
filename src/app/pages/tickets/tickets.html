@@ -3,11 +3,10 @@
         <h1>Mis tiquetes</h1>
     </header>
     @if(loading()){
-    <p>Cargando...</p>
-    }@else if(message()){
-    <p>{{ message() }}</p>
+    <div class="overlay">
+        <div class="spinner"></div>
+    </div>
     }
-
 
     <section class="data-table">
         @if(!loading() && tickets().length){
@@ -19,7 +18,7 @@
                     <th>Sillas</th>
                     <th>Destino</th>
                     <th>Estado</th>
-                    <th></th>
+                    <th>Cancelar</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,7 +28,11 @@
                     <td>{{ t.locator }}</td>
                     <td>{{ t.seats }}</td>
                     <td>{{ t.flight?.destination }}</td>
-                    <td>{{ t.status }}</td>
+                    <td
+                        [ngClass]="{ 'status-pending': t.status === 'reserved', 'status-approved': t.status === 'paid', 'status-rejected': t.status === 'canceled' }">
+                        {{ t.status }}
+                    </td>
+                    <td><button (click)="cancel(t)" [disabled]="t.status !== 'reserved'">Cancelar</button></td>
                 </tr>
                 }
 
@@ -37,6 +40,4 @@
         </table>
         }
     </section>
-
-
 </main>
