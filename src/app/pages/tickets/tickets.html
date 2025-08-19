@@ -3,9 +3,7 @@
         <h1>Mis tiquetes</h1>
     </header>
     @if(loading()){
-    <div class="overlay">
-        <div class="spinner"></div>
-    </div>
+        <app-spinner></app-spinner>
     }
 
     <section class="data-table">
@@ -32,7 +30,12 @@
                         [ngClass]="{ 'status-pending': t.status === 'reserved', 'status-approved': t.status === 'paid', 'status-rejected': t.status === 'canceled' }">
                         {{ t.status }}
                     </td>
-                    <td><button (click)="cancel(t)" [disabled]="t.status !== 'reserved'">Cancelar</button></td>
+                    @if(t.status === 'reserved'){
+                        <td><button class="cancel" (click)="submit(t, 'canceled')">Cancelar</button></td>
+                    }@else if(t.status === 'canceled'){
+                        <td><button class="reserved" (click)="submit(t, 'reserved')">Reservar</button></td>
+                    }
+                    
                 </tr>
                 }
 

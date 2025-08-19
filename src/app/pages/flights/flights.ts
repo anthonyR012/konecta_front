@@ -4,10 +4,11 @@ import { TicketService } from '../../shared/ticket.service';
 import { AuthService } from '../../shared/auth.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { Spinner } from '../spinner/spinner';
 
 @Component({
   selector: 'app-flights',
-  imports: [CommonModule],
+  imports: [CommonModule,Spinner],
   templateUrl: './flights.html',
   styleUrl: './flights.scss'
 })
@@ -41,7 +42,7 @@ export class Flights {
     this.loading.set(true);
     this.load();
     if (!this.auth.user()) {
-      this.auth.fetchMe().subscribe({ error: () => this.router.navigateByUrl('/login') });
+      this.auth.fetchMe().subscribe({ error: () => this.message.set('No se pudo obtener el usuario') });
     }
   }
   

@@ -1,10 +1,11 @@
 import { Component, inject, signal } from '@angular/core';
 import { Ticket, TicketService } from '../../shared/ticket.service';
 import { CommonModule } from '@angular/common';
+import { Spinner } from '../spinner/spinner';
 
 @Component({
   selector: 'app-tickets',
-  imports: [CommonModule],
+  imports: [CommonModule, Spinner],
   templateUrl: './tickets.html',
   styleUrl: './tickets.scss'
 })
@@ -21,10 +22,10 @@ export class Tickets {
   }
 
 
-  cancel(ticket: Ticket) {
-    ticket.status = 'canceled';
+  submit(ticket: Ticket, status: 'reserved' | 'paid' | 'canceled') {
+    ticket.status = status;
     this.loading.set(true);
-    this.ticketsApi.cancel(ticket).subscribe({
+    this.ticketsApi.update(ticket).subscribe({
       next: () => {
         this.message.set('Tiquete cancelado');
         this.ticketsApi.mine().subscribe({ next: (rows) => this.tickets.set(rows), });
@@ -35,4 +36,5 @@ export class Tickets {
     this.loading.set(false);
 
   }
+
 }

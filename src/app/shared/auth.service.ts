@@ -21,12 +21,6 @@ export class AuthService {
     user = signal<User | null>(null);
     isAuthenticated = false;
 
-    loadSession() {
-        const token = sessionStorage.getItem(TOKEN_KEY);
-        this.isAuthenticated = !!token;
-        return Promise.resolve(true);
-    }
-
     login(body: LoginBody) {
         return this.http.post<LoginResponse>(`${API}/auth/login`, body).pipe(
             tap(res => {
