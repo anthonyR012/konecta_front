@@ -8,8 +8,12 @@ import { Tickets } from './pages/tickets/tickets';
 import { Register } from './pages/register/register';
 
 export const routes: Routes = [
-  { path: 'login', component: Login, canActivate: [guestGuard] },
-  { path: 'register', component: Register},
+  { path: 'login', component: Login, 
+   canActivate: [guestGuard]
+ },
+  { path: 'register', component: Register,
+   canActivate : [guestGuard]
+   },
   {
     path: 'dashboard',
     component: Dashboard,

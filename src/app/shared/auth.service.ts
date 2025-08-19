@@ -22,7 +22,7 @@ export class AuthService {
     isAuthenticated = false;
 
     loadSession() {
-        const token = localStorage.getItem(TOKEN_KEY);
+        const token = sessionStorage.getItem(TOKEN_KEY);
         this.isAuthenticated = !!token;
         return Promise.resolve(true);
     }
@@ -30,7 +30,7 @@ export class AuthService {
     login(body: LoginBody) {
         return this.http.post<LoginResponse>(`${API}/auth/login`, body).pipe(
             tap(res => {
-                localStorage.setItem(TOKEN_KEY, res.token);
+                sessionStorage.setItem(TOKEN_KEY, res.token);
             })
         );
     }
@@ -38,7 +38,7 @@ export class AuthService {
     register(body: RegisterBody){
         return this.http.post<LoginResponse>(`${API}/auth/register`, body).pipe(
             tap(res => {
-                localStorage.setItem(TOKEN_KEY, res.token);
+                sessionStorage.setItem(TOKEN_KEY, res.token);
             })
         );
     }
@@ -51,9 +51,9 @@ export class AuthService {
 
     logout() {
         this.http.post(`${API}/auth/logout`, {}).subscribe({ error: () => { } })
-        localStorage.removeItem(TOKEN_KEY);
+        sessionStorage.removeItem(TOKEN_KEY);
     }
 
-    get token() { return localStorage.getItem(TOKEN_KEY); }
+    get token() { return sessionStorage.getItem(TOKEN_KEY); }
     isLoggedIn() { return !!this.token; }
 }
