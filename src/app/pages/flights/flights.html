@@ -1,9 +1,14 @@
+@if(loading()){
+<div class="spinner-container">
+    <app-spinner></app-spinner>
+</div>
+}
 <main class="main-content">
     <header class="main-header">
         <h1>Vuelos</h1>
     </header>
-    @if(loading()){
-        <app-spinner></app-spinner>
+    @if(flights().length == 0 && !loading()){
+    <app-retry [message]="message() ?? 'Sin información'" (click)="load()"></app-retry>
     }
 
     <section class="filters">

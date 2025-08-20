@@ -1,16 +1,16 @@
+@if(loading()){
+<div class="spinner-container">
+    <app-spinner></app-spinner>
+</div>
+}
 <main class="main-content">
+
     <header class="main-header">
         <h1>Mis tiquetes</h1>
     </header>
-    @if(loading()){
-    <app-spinner></app-spinner>
-    }@else if(tickets().length == 0){
-        <div class="err">
-            
-            <img src="assets/images/empty.png" alt="No se encontraron tiquetes">
-            <p>{{ message() ?? "Sin información" }}</p>
-            <button>Reintentar</button>
-        </div>
+
+    @if(tickets().length == 0 && !loading()){
+    <app-retry [message]="message() ?? 'Sin información'" (click)="loadTickets()"></app-retry>
     }
 
 

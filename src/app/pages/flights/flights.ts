@@ -4,10 +4,11 @@ import { TicketService } from '../../shared/ticket.service';
 import { AuthService } from '../../shared/auth.service';
 import { CommonModule } from '@angular/common';
 import { Spinner } from '../spinner/spinner';
+import { Retry } from "../retry/retry";
 
 @Component({
   selector: 'app-flights',
-  imports: [CommonModule,Spinner],
+  imports: [CommonModule, Spinner, Retry],
   templateUrl: './flights.html',
   styleUrl: './flights.scss'
 })

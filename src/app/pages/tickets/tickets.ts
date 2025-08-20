@@ -2,10 +2,11 @@ import { Component, inject, signal } from '@angular/core';
 import { Ticket, TicketService } from '../../shared/ticket.service';
 import { CommonModule } from '@angular/common';
 import { Spinner } from '../spinner/spinner';
+import { Retry } from "../retry/retry";
 
 @Component({
   selector: 'app-tickets',
-  imports: [CommonModule, Spinner],
+  imports: [CommonModule, Spinner, Retry],
   templateUrl: './tickets.html',
   styleUrl: './tickets.scss'
 })
@@ -18,6 +19,10 @@ export class Tickets {
 
   ngOnInit() {
     this.loading.set(true);
+    this.loadTickets();
+  }
+
+  loadTickets(){
     this.ticketsApi.mine().subscribe({ next: (rows) => this.tickets.set(rows),
       error : (e) => this.message.set(e?.error?.message ?? 'No se pudo obtener los tiquetes'),
       complete: () => this.loading.set(false) });
@@ -30,7 +35,7 @@ export class Tickets {
     this.ticketsApi.update(ticket).subscribe({
       next: () => {
         this.message.set('Tiquete cancelado');
-        this.ticketsApi.mine().subscribe({ next: (rows) => this.tickets.set(rows), });
+        this.loadTickets();
       },
       complete: () => this.loading.set(false),
       error: (e) => this.message.set(e?.error?.message ?? 'No se pudo cancelar el tiquete')
