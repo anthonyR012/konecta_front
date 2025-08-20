@@ -3,7 +3,6 @@ import { Flight, FlightService, Paginated } from '../../shared/flight.service';
 import { TicketService } from '../../shared/ticket.service';
 import { AuthService } from '../../shared/auth.service';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
 import { Spinner } from '../spinner/spinner';
 
 @Component({
@@ -15,7 +14,6 @@ import { Spinner } from '../spinner/spinner';
 export class Flights {
 
   private auth = inject(AuthService);
-  private router = inject(Router);
   private flightsApi = inject(FlightService);
   private ticketsApi = inject(TicketService);
 

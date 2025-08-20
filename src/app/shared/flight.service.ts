@@ -4,8 +4,15 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 
 export type Flight = {
-  id: number, code: string, origin: string, destination: string,
-  departure_at:string, seats_total: number, seats_available: number, price: number 
+  id: number, 
+  code: string,
+  origin: string,
+  destination: string,
+  icon: string,
+  departure_at:string,
+  seats_total: number,
+  seats_available: number,
+  price: number 
 };
 
 

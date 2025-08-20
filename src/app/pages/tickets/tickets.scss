@@ -1,11 +1,10 @@
 .main-content {
     flex: 1;
-    position: relative;
-    width: 100%;
-    margin-left: 240px; 
+    min-width: 0;
     padding: 1.5rem;
     background-color: #f5f6fa;
     min-height: 100vh;
+    margin-left: 240px;
   
     .main-header {
       margin-bottom: 1rem;
@@ -127,3 +126,40 @@
     color: red;
   }
   
+
+  .err{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    img{
+      width: 200px;
+      height: 200px;
+    }
+    button{
+      border: none;
+      margin-top: 5px;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      color: white;
+      background-color: black;
+      transition: 0.3s;
+  
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+
+    p{
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #333;
+      padding: 1rem;
+    } 
+  }

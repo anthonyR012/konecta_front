@@ -18,7 +18,9 @@ export class Tickets {
 
   ngOnInit() {
     this.loading.set(true);
-    this.ticketsApi.mine().subscribe({ next: (rows) => this.tickets.set(rows), complete: () => this.loading.set(false) });
+    this.ticketsApi.mine().subscribe({ next: (rows) => this.tickets.set(rows),
+      error : (e) => this.message.set(e?.error?.message ?? 'No se pudo obtener los tiquetes'),
+      complete: () => this.loading.set(false) });
   }
 
 

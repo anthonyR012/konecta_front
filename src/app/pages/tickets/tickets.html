@@ -3,11 +3,19 @@
         <h1>Mis tiquetes</h1>
     </header>
     @if(loading()){
-        <app-spinner></app-spinner>
+    <app-spinner></app-spinner>
+    }@else if(tickets().length == 0){
+        <div class="err">
+            
+            <img src="assets/images/empty.png" alt="No se encontraron tiquetes">
+            <p>{{ message() ?? "Sin información" }}</p>
+            <button>Reintentar</button>
+        </div>
     }
 
+
+    @if(!loading() && tickets().length){
     <section class="data-table">
-        @if(!loading() && tickets().length){
         <table>
             <thead>
                 <tr>
@@ -31,16 +39,17 @@
                         {{ t.status }}
                     </td>
                     @if(t.status === 'reserved'){
-                        <td><button class="cancel" (click)="submit(t, 'canceled')">Cancelar</button></td>
+                    <td><button class="cancel" (click)="submit(t, 'canceled')">Cancelar</button></td>
                     }@else if(t.status === 'canceled'){
-                        <td><button class="reserved" (click)="submit(t, 'reserved')">Reservar</button></td>
+                    <td><button class="reserved" (click)="submit(t, 'reserved')">Reservar</button></td>
                     }
-                    
+
                 </tr>
                 }
 
             </tbody>
         </table>
-        }
     </section>
+    }
+
 </main>

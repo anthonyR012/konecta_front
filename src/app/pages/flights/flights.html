@@ -26,6 +26,7 @@
         <table>
             <thead>
                 <tr>
+                    <th>Icono</th>
                     <th>Código</th>
                     <th>Origen</th>
                     <th>Destino</th>
@@ -38,6 +39,7 @@
             <tbody>
                 @for (f of flights(); track $index) {
                 <tr>
+                    <td><img src="{{ f.icon }}" alt="Avion"></td>
                     <td>{{ f.code }}</td>
                     <td>{{ f.origin }}</td>
                     <td>{{ f.destination }}</td>
