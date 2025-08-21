@@ -40,10 +40,12 @@ export class Register {
 
     this.auth.register({ email: email!, password: password!, name: name! }).subscribe({
       next: () => {
+        console.log("registro exitoso en el front");
         this.loading = false;
         this.router.navigateByUrl('/dashboard');
       },
       error: (err) => {
+        console.log("error al registrar", err);
         this.loading = false;
         this.error = err?.error?.message ?? "No se pudo iniciar sesión";
       }

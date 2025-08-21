@@ -4,7 +4,7 @@ import { isPlatformServer } from '@angular/common';
 
 export const authGuard: CanActivateFn = () => {
   const router = inject(Router);
-  const platformId = inject(PLATFORM_ID)
+  const platformId = inject(PLATFORM_ID);
   if(isPlatformServer(platformId)) return true;
   return !!sessionStorage.getItem('auth_token') ? true : router.parseUrl('/login');
 };
