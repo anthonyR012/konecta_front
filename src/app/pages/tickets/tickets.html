@@ -8,9 +8,8 @@
     <header class="main-header">
         <h1>Mis tiquetes</h1>
     </header>
-
     @if(tickets().length == 0 && !loading()){
-    <app-retry [message]="message() ?? 'Sin información'" (click)="loadTickets()"></app-retry>
+        <app-retry [message]="message() ?? 'Sin información'" (click)="loadTickets()"></app-retry>
     }
 
 

@@ -32,7 +32,6 @@ export class AuthService {
     register(body: RegisterBody){
         return this.http.post<LoginResponse>(`${API}/auth/register`, body).pipe(
             tap(res => {
-                console.log("respuesta obtenida", res);
                 sessionStorage.setItem(TOKEN_KEY, res.token);
             })
         );
