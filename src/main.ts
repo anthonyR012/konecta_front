@@ -43,6 +43,7 @@ async function start() {
       useValue: locale
     }
   ]});
+  document.querySelector('app-root')?.classList.add('app-ready');
 }
 
 start();
