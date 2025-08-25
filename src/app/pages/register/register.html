@@ -1,35 +1,35 @@
 
 <div class="background">
     <div class="register">
-        <h1 class="title">Registrarme</h1>
+        <h1 class="title" i18n="@@register">Registrarme</h1>
 
         <form [formGroup]="form" (ngSubmit)="submit()">
-            <label>
+            <label  i18n="@@name">
                 Nombre
                 <input type="text" formControlName="name" placeholder="John Doe" />
             </label>
-            <label>
+            <label i18n="@@email">
                 Correo
                 <input type="email" formControlName="email" placeholder="admin@example.com" />
             </label>
             <div class="password-section">
-                <label>
+                <label i18n="@@password">
                     Contraseña
                     <input type="password" formControlName="password" placeholder="********" />
                 </label>
-                <label>
+                <label i18n="@@confirmPassword">
                     Confirme contraseña
                     <input type="password" formControlName="confirmPassword" placeholder="********" />
                 </label>        
             </div>
-            <button type="submit" class="button" [disabled]="loading || form.invalid">Registrarme</button>
+            <button type="submit" class="button" [disabled]="loading || form.invalid" i18n="@@register">Registrarme</button>
 
 
         </form>
         @if(error){
         <p class="error"> {{ error }}</p>
         }
-        <p class="login"> ¿Ya estas registrado?<a routerLink="/login">Ingresar</a></p>
+        <p class="login" i18n="@@alreadyRegister"> ¿Ya estas registrado?<a routerLink="/login">Ingresar</a></p>
     </div>
 
 </div>

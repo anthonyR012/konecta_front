@@ -6,7 +6,7 @@
 <main class="main-content">
 
     <header class="main-header">
-        <h1>Mis tiquetes</h1>
+        <h1 i18n="@@myTickets">Mis tiquetes</h1>
     </header>
     @if(tickets().length == 0 && !loading()){
         <app-retry [message]="message() ?? 'Sin información'" (click)="loadTickets()"></app-retry>
@@ -18,12 +18,12 @@
         <table>
             <thead>
                 <tr>
-                    <th>Vuelo</th>
-                    <th>Locador</th>
-                    <th>Sillas</th>
-                    <th>Destino</th>
-                    <th>Estado</th>
-                    <th>Cancelar</th>
+                    <th i18n="@@flight">Vuelo</th>
+                    <th i18n="@@locator">Locador</th>
+                    <th i18n="@@seats">Sillas</th>
+                    <th i18n="@@destination">Destino</th>
+                    <th i18n="@@status">Estado</th>
+                    <th i18n="@@cancel">Cancelar</th>
                 </tr>
             </thead>
             <tbody>
@@ -38,9 +38,9 @@
                         {{ t.status }}
                     </td>
                     @if(t.status === 'reserved'){
-                    <td><button class="cancel" (click)="submit(t, 'canceled')">Cancelar</button></td>
+                    <td><button class="cancel" (click)="submit(t, 'canceled')" i18n="@@cancel">Cancelar</button></td>
                     }@else if(t.status === 'canceled'){
-                    <td><button class="reserved" (click)="submit(t, 'reserved')">Reservar</button></td>
+                    <td><button class="reserved" (click)="submit(t, 'reserved')" i18n="@@reserve">Reservar</button></td>
                     }
 
                 </tr>

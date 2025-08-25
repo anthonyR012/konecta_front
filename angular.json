@@ -4,13 +4,7 @@
   "newProjectRoot": "projects",
   "projects": {
     "konecta_front": {
-      "projectType": "application",
-      "i18n": {
-        "sourceLocale": "es",
-        "locales": {
-          "en": "src/i18n/messages.en.xlf"
-        }
-      },      
+      "projectType": "application",     
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"

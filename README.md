@@ -57,3 +57,31 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+## Run i18n 
+
+First assing id to any traslation word
+```bash
+<a [routerLink]="['flights']" routerLinkActive="active" i18n="@@flights">Vuelos</a>
+```
+
+Make sure you have installed localize package:
+```bash
+ng add @angular/localize
+```
+Then extract those traslation using the command:
+
+```bash
+//You can use json format --format=json
+
+ng extract-i18n --format=xlf --output-path src/i18n
+
+```
+
+Now you will got the traslation you just need to create other file
+
+```bash
+    messages.en.json
+    messages.es.json
+```
+

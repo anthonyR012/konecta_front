@@ -5,7 +5,7 @@
 }
 <main class="main-content">
     <header class="main-header">
-        <h1>Vuelos</h1>
+        <h1 i18n="@@flights" >Vuelos</h1>
     </header>
     @if(flights().length == 0 && !loading()){
     <app-retry [message]="message() ?? 'Sin información'" (click)="load()"></app-retry>
@@ -13,15 +13,15 @@
 
     <section class="filters">
         <label>
-            <p>Origen</p>
+            <p i18n="@@origin" >Origen</p>
             <input type="text" [value]="origin()" (input)="origin.set($any($event.target).value)">
         </label>
         <label>
-            <p>Destino</p>
+            <p i18n="@@destination" >Destino</p>
             <input type="text" [value]="destination()" (input)="destination.set($any($event.target).value)">
         </label>
         <label>
-            <p>Fecha</p>
+            <p i18n="@@date" >Fecha</p>
             <input type="date" [value]="date()" (input)="date.set($any($event.target).value)">
         </label>
     </section>
@@ -31,13 +31,13 @@
         <table>
             <thead>
                 <tr>
-                    <th>Icono</th>
-                    <th>Código</th>
-                    <th>Origen</th>
-                    <th>Destino</th>
-                    <th>Salida</th>
-                    <th>Disp.</th>
-                    <th>Precio</th>
+                    <th i18n="@@icon" >Icono</th>
+                    <th i18n="@@code" >Código</th>
+                    <th i18n="@@origin" >Origen</th>
+                    <th i18n="@@destination" >Destino</th>
+                    <th i18n="@@departure" >Salida</th>
+                    <th i18n="@@available" >Disp.</th>
+                    <th i18n="@@price" >Precio</th>
                     <th></th>
                 </tr>
             </thead>
@@ -51,7 +51,7 @@
                     <td>{{ f.departure_at | date:'short' }}</td>
                     <td>{{ f.seats_available }}</td>
                     <td>{{ f.price | currency:'USD':'symbol' }}</td>
-                    <td><button (click)="reserve(f)" [disabled]="f.seats_available < 1">Reservar</button></td>
+                    <td><button (click)="reserve(f)" [disabled]="f.seats_available < 1" i18n="@@reserve" >Reservar</button></td>
                 </tr>
                 }
 
@@ -61,9 +61,9 @@
     </section>
     @if(!loading() && total() > 0){
     <div class="pager">
-        <button (click)="goPrev()" [disabled]="page() <= 1">« Anterior</button>
-        <span>Página {{ page() }} de {{ lastPage() }} ({{ total() }} resultados)</span>
-        <button (click)="goNext()" [disabled]="page() >= lastPage()">Siguiente »</button>
+        <button (click)="goPrev()" [disabled]="page() <= 1"  i18n="@@previous" >« Anterior</button>
+        <span i18n="@@page" >Página {{ page() }} de {{ lastPage() }} ({{ total() }} resultados)</span>
+        <button (click)="goNext()" [disabled]="page() >= lastPage()" i18n="@@next" >Siguiente »</button>
     </div>
     }
 

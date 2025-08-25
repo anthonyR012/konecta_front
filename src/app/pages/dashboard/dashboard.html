@@ -2,12 +2,12 @@
   <!-- Panel lateral -->
   <aside class="sidebar">
     <div class="sidebar-logo">
-      <h3>Administración</h3>
+      <h3 i18n="@@dashboard">Administración</h3>
       <button type="button" (click)="logout()">Salir</button>
     </div>
     <nav class="sidebar-nav">
-      <a [routerLink]="['flights']" routerLinkActive="active">Vuelos</a>
-      <a [routerLink]="['my-tickets']" routerLinkActive="active">Mis tiquetes</a>
+      <a [routerLink]="['flights']" routerLinkActive="active" i18n="@@flights">Vuelos</a>
+      <a [routerLink]="['my-tickets']" routerLinkActive="active" i18n="@@myTickets">Mis tiquetes</a>
     </nav>
   </aside>
   <!-- Contenido principal -->
